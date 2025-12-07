@@ -11,8 +11,8 @@ export default function FloatingCallButton() {
         className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white rounded-full w-14 h-14 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 animate-pulse hover:animate-none"
         asChild
       >
-        <a 
-          href="tel:+31850805636" 
+        <a
+          href="tel:+31610754337"
           className="flex items-center justify-center"
           aria-label="Bel MasterClean direct"
         >

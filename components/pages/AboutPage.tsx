@@ -134,7 +134,7 @@ export default function AboutPage({ searchParams }: AboutPageProps) {
                 </div>
               </div>
               <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" asChild>
-                <a href="tel:+31850805636">
+                <a href="tel:+31610754337">
                   <Phone className="w-5 h-5 mr-2" />
                   {t.nav.callNow} {t.hero.phone}
                 </a>
@@ -234,7 +234,7 @@ export default function AboutPage({ searchParams }: AboutPageProps) {
               <Link href={`/contact?lang=${lang}`}>{t.services.cta}</Link>
             </Button>
             <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-bold animate-pulse" asChild>
-              <a href="tel:+31850805636">
+              <a href="tel:+31610754337">
                 <Phone className="w-5 h-5 mr-2" />
                 {t.nav.callNow}: {t.hero.phone}
               </a>

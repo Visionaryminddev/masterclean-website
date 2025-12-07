@@ -39,11 +39,11 @@ export default function Footer({ translations, lang }: FooterProps) {
                   <p className="font-medium">BTW NL005215222B17</p>
                 </div>
               </div>
-              <Button 
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto" 
+              <Button
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
                 asChild
               >
-                <a href="tel:+31850805636" className="flex items-center justify-center">
+                <a href="tel:+31610754337" className="flex items-center justify-center">
                   <Phone className="w-4 h-4 mr-2" />
                   {translations.footer.callButton}
                 </a>
@@ -57,8 +57,8 @@ export default function Footer({ translations, lang }: FooterProps) {
               </h3>
               <ul className="space-y-3">
                 <li>
-                  <Link 
-                    href={`/services?lang=${lang}#vacation`} 
+                  <Link
+                    href={`/services?lang=${lang}#vacation`}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group"
                   >
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 group-hover:bg-blue-400"></span>
@@ -66,8 +66,8 @@ export default function Footer({ translations, lang }: FooterProps) {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    href={`/services?lang=${lang}#office`} 
+                  <Link
+                    href={`/services?lang=${lang}#office`}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group"
                   >
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 group-hover:bg-blue-400"></span>
@@ -75,8 +75,8 @@ export default function Footer({ translations, lang }: FooterProps) {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    href={`/services?lang=${lang}#general`} 
+                  <Link
+                    href={`/services?lang=${lang}#general`}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group"
                   >
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 group-hover:bg-blue-400"></span>
@@ -98,30 +98,30 @@ export default function Footer({ translations, lang }: FooterProps) {
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 font-medium">Telefoon</p>
-                    <a 
-                      href="tel:+31850805636" 
+                    <a
+                      href="tel:+31610754337"
                       className="text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
                     >
-                      +31 (0)85 0805636
+                      +31 (0)6 10754337
                     </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-3 group">
                   <div className="flex-shrink-0 w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                     <Mail className="w-4 h-4 text-white" />
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 font-medium">E-mail</p>
-                    <a 
-                      href="mailto:info@mastercleanservice.nl" 
+                    <a
+                      href="mailto:info@mastercleanservice.nl"
                       className="text-gray-300 hover:text-blue-400 transition-colors duration-200 font-medium"
                     >
                       info@mastercleanservice.nl
                     </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                     <MapPin className="w-4 h-4 text-white" />
@@ -141,8 +141,8 @@ export default function Footer({ translations, lang }: FooterProps) {
               </h3>
               <ul className="space-y-3">
                 <li>
-                  <Link 
-                    href={`/?lang=${lang}`} 
+                  <Link
+                    href={`/?lang=${lang}`}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group"
                   >
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 group-hover:bg-blue-400"></span>
@@ -150,8 +150,8 @@ export default function Footer({ translations, lang }: FooterProps) {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    href={`/services?lang=${lang}`} 
+                  <Link
+                    href={`/services?lang=${lang}`}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group"
                   >
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 group-hover:bg-blue-400"></span>
@@ -159,8 +159,8 @@ export default function Footer({ translations, lang }: FooterProps) {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    href={`/about?lang=${lang}`} 
+                  <Link
+                    href={`/about?lang=${lang}`}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group"
                   >
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 group-hover:bg-blue-400"></span>
@@ -168,8 +168,8 @@ export default function Footer({ translations, lang }: FooterProps) {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    href={`/contact?lang=${lang}`} 
+                  <Link
+                    href={`/contact?lang=${lang}`}
                     className="text-gray-300 hover:text-blue-400 transition-colors duration-200 flex items-center group"
                   >
                     <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-3 group-hover:bg-blue-400"></span>

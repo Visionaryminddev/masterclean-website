@@ -79,7 +79,7 @@ export async function submitContactForm(formData: FormData) {
 
   // Try direct email solution first
   console.log("🔄 Attempting to send email via direct method...")
-  
+
   // Use a simple webhook solution that will work reliably
   return await sendEmailDirectly({ name, email, phone, message, files })
 
@@ -102,8 +102,8 @@ export async function submitContactForm(formData: FormData) {
         <h3 style="color: #374151; margin-top: 0;">📎 Bijgevoegde Bestanden (${files.length}):</h3>
         <ul style="margin: 0; padding-left: 20px;">
           ${files
-            .map(
-              (file) => `
+          .map(
+            (file) => `
             <li style="margin: 5px 0;">
               <strong>${file.name}</strong> 
               <span style="color: #6b7280; font-size: 12px;">
@@ -111,8 +111,8 @@ export async function submitContactForm(formData: FormData) {
               </span>
             </li>
           `,
-            )
-            .join("")}
+          )
+          .join("")}
         </ul>
       </div>
     `
@@ -178,9 +178,8 @@ export async function submitContactForm(formData: FormData) {
               <p style="white-space: pre-wrap;">${message}</p>
             </div>
             
-            ${
-              files.length > 0
-                ? `
+            ${files.length > 0
+            ? `
             <div style="background-color: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
               <h3 style="color: #374151; margin-top: 0;">📎 Uw bijgevoegde bestanden:</h3>
               <ul style="margin: 0; padding-left: 20px;">
@@ -191,12 +190,12 @@ export async function submitContactForm(formData: FormData) {
               </p>
             </div>
             `
-                : ""
-            }
+            : ""
+          }
             
             <div style="background-color: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0; color: #92400e;">
-                <strong>🚀 Spoed?</strong> Bel ons direct op <a href="tel:+31850805636" style="color: #ea580c;">+31 (0)85 0805636</a> of WhatsApp <a href="https://wa.me/31657211993" style="color: #16a34a;">+31 6 57211993</a>
+                <strong>🚀 Spoed?</strong> Bel ons direct op <a href="tel:+31610754337" style="color: #ea580c;">+31 (0)6 10754337</a> of WhatsApp <a href="https://wa.me/31610754337" style="color: #16a34a;">+31 6 10754337</a>
               </p>
             </div>
             
@@ -207,8 +206,8 @@ export async function submitContactForm(formData: FormData) {
             
             <div style="color: #6b7280; font-size: 14px;">
               <p><strong>MasterClean</strong><br>
-              Telefoon: +31 (0)85 0805636<br>
-              WhatsApp: +31 6 57211993<br>
+              Telefoon: +31 (0)6 10754337<br>
+              WhatsApp: +31 6 10754337<br>
               Email: info@mastercleanservice.nl<br>
               Werkgebied: Zeeland & Noord-Holland</p>
             </div>
@@ -223,7 +222,7 @@ export async function submitContactForm(formData: FormData) {
 
     return {
       success: true,
-      message: `Bedankt ${name}! Uw bericht${files.length > 0 ? ` met ${files.length} bijlage${files.length !== 1 ? "s" : ""}` : ""} is ontvangen. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)85 0805636 voor directe hulp.`,
+      message: `Bedankt ${name}! Uw bericht${files.length > 0 ? ` met ${files.length} bijlage${files.length !== 1 ? "s" : ""}` : ""} is ontvangen. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)6 10754337 voor directe hulp.`,
     }
   } catch (error) {
     console.error("❌ Failed to send email:", error)
@@ -233,13 +232,13 @@ export async function submitContactForm(formData: FormData) {
       if (error.message.includes("API key")) {
         return {
           success: false,
-          error: "Email service configuratie probleem. Bel ons direct op +31 (0)85 0805636.",
+          error: "Email service configuratie probleem. Bel ons direct op +31 (0)6 10754337.",
         }
       }
       if (error.message.includes("rate limit")) {
         return {
           success: false,
-          error: "Te veel berichten verzonden. Probeer het over een paar minuten opnieuw of bel +31 (0)85 0805636.",
+          error: "Te veel berichten verzonden. Probeer het over een paar minuten opnieuw of bel +31 (0)6 10754337.",
         }
       }
     }
@@ -247,7 +246,7 @@ export async function submitContactForm(formData: FormData) {
     return {
       success: false,
       error:
-        "Er is een probleem opgetreden bij het verzenden van uw bericht. Bel ons direct op +31 (0)85 0805636 of stuur een email naar info@mastercleanservice.nl.",
+        "Er is een probleem opgetreden bij het verzenden van uw bericht. Bel ons direct op +31 (0)6 10754337 of stuur een email naar info@mastercleanservice.nl.",
     }
   } finally {
     console.log("=== CONTACT FORM SUBMISSION END ===")
@@ -314,7 +313,7 @@ export async function submitAppointmentForm(formData: FormData) {
     console.error("❌ RESEND_API_KEY not found in environment variables")
     return {
       success: false,
-      error: "Email service niet geconfigureerd. Bel ons direct op +31 (0)85 0805636.",
+      error: "Email service niet geconfigureerd. Bel ons direct op +31 (0)6 10754337.",
     }
   }
 
@@ -355,16 +354,15 @@ export async function submitAppointmentForm(formData: FormData) {
             <p><strong>Dienst:</strong> ${serviceType}</p>
           </div>
           
-          ${
-            message
-              ? `
+          ${message
+          ? `
           <div style="background-color: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #374151; margin-top: 0;">💬 Aanvullende Informatie:</h3>
             <p style="white-space: pre-wrap;">${message}</p>
           </div>
           `
-              : ""
-          }
+          : ""
+        }
           
           <div style="background-color: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0;">
             <p style="margin: 0; color: #92400e;">
@@ -375,7 +373,7 @@ export async function submitAppointmentForm(formData: FormData) {
           <div style="background-color: #dcfce7; padding: 15px; border-radius: 8px; margin: 20px 0;">
             <p style="margin: 0; color: #166534;">
               <strong>📞 Snelle Actie:</strong><br>
-              Bel: <a href="tel:${phone}" style="color: #ea580c;">${phone}</a><br>
+                <a href="tel:+31610754337" className="flex items-center justify-center">${phone}</a><br>
               WhatsApp: <a href="https://wa.me/${phone.replace(/\D/g, "")}" style="color: #16a34a;">Stuur WhatsApp</a><br>
               Email: <a href="mailto:${email}" style="color: #2563eb;">${email}</a>
             </p>
@@ -423,8 +421,8 @@ export async function submitAppointmentForm(formData: FormData) {
             <div style="background-color: #dcfce7; padding: 15px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0; color: #166534;">
                 <strong>🚀 Spoed of vragen?</strong><br>
-                Bel ons direct: <a href="tel:+31850805636" style="color: #ea580c;">+31 (0)85 0805636</a><br>
-                WhatsApp: <a href="https://wa.me/31657211993" style="color: #16a34a;">+31 6 57211993</a>
+                Bel ons direct: <a href="tel:+31610754337" style="color: #ea580c;">+31 (0)6 10754337</a><br>
+                WhatsApp: <a href="https://wa.me/31610754337" style="color: #16a34a;">+31 6 10754337</a>
               </p>
             </div>
             
@@ -435,8 +433,8 @@ export async function submitAppointmentForm(formData: FormData) {
             
             <div style="color: #6b7280; font-size: 14px;">
               <p><strong>MasterClean</strong><br>
-              Telefoon: +31 (0)85 0805636<br>
-              WhatsApp: +31 6 57211993<br>
+              Telefoon: +31 (0)6 10754337<br>
+              WhatsApp: +31 6 10754337<br>
               Email: info@mastercleanservice.nl<br>
               Werkgebied: Zeeland & Noord-Holland</p>
             </div>
@@ -459,13 +457,13 @@ export async function submitAppointmentForm(formData: FormData) {
       if (error.message.includes("API key")) {
         return {
           success: false,
-          error: "Email service configuratie probleem. Bel ons direct op +31 (0)85 0805636.",
+          error: "Email service configuratie probleem. Bel ons direct op +31 (0)6 10754337.",
         }
       }
       if (error.message.includes("rate limit")) {
         return {
           success: false,
-          error: "Te veel berichten verzonden. Probeer het over een paar minuten opnieuw of bel +31 (0)85 0805636.",
+          error: "Te veel berichten verzonden. Probeer het over een paar minuten opnieuw of bel +31 (0)6 10754337.",
         }
       }
     }
@@ -473,7 +471,7 @@ export async function submitAppointmentForm(formData: FormData) {
     return {
       success: false,
       error:
-        "Er is een probleem opgetreden bij het verzenden van uw afspraakverzoek. Bel ons direct op +31 (0)85 0805636 of stuur een WhatsApp naar +31 6 57211993.",
+        "Er is een probleem opgetreden bij het verzenden van uw afspraakverzoek. Bel ons direct op +31 (0)6 10754337 of stuur een WhatsApp naar +31 6 10754337.",
     }
   } finally {
     console.log("=== APPOINTMENT FORM SUBMISSION END ===")
@@ -490,12 +488,12 @@ async function sendEmailDirectly({ name, email, phone, message, files }: {
 }) {
   try {
     console.log("📧 Attempting direct email solution...")
-    
+
     // Use Web3Forms as a reliable service
     const web3formsUrl = 'https://api.web3forms.com/submit'
-    
+
     const formData = new FormData()
-formData.append('access_key', 'your_correct_access_key')
+    formData.append('access_key', 'your_correct_access_key')
     formData.append('name', name)
     formData.append('email', email)
     formData.append('phone', phone || 'Niet opgegeven')
@@ -504,7 +502,7 @@ formData.append('access_key', 'your_correct_access_key')
     formData.append('subject', `🔵 Nieuwe contactaanvraag van ${name} - MasterClean`)
     formData.append('to', 'info@mastercleanservice.nl')
     formData.append('replyto', email)
-    
+
     const fullMessage = `
 Nieuwe contactaanvraag via MasterClean website:
 
@@ -527,21 +525,21 @@ Bijlagen: ${files.length > 0 ? `${files.length} bestand(en)` : 'Geen bijlagen'}
 - Email: ${email}
 - Website: https://mastercleanservice.nl
 `
-    
+
     formData.append('message', fullMessage)
-    
+
     const response = await fetch(web3formsUrl, {
       method: 'POST',
       body: formData
     })
-    
+
     const result = await response.json()
-    
+
     if (response.ok && result.success) {
       console.log("✅ Direct email sent successfully via Web3Forms")
       return {
         success: true,
-        message: `Bedankt ${name}! Uw bericht is ontvangen. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)85 0805636 voor directe hulp.`
+        message: `Bedankt ${name}! Uw bericht is ontvangen. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)6 10754337 voor directe hulp.`
       }
     } else {
       console.error("Web3Forms error:", result)
@@ -564,10 +562,10 @@ async function sendEmailViaAlternative({ name, email, phone, message, files }: {
 }) {
   try {
     console.log("Attempting alternative email solution...")
-    
+
     // Use Formspree as backup (free service)
     const formspreeUrl = 'https://formspree.io/f/xvgorqbv' // You'll need to set this up
-    
+
     const formData = new FormData()
     formData.append('name', name)
     formData.append('email', email)
@@ -576,7 +574,7 @@ async function sendEmailViaAlternative({ name, email, phone, message, files }: {
     formData.append('_replyto', email)
     formData.append('_subject', `Nieuwe contactaanvraag van ${name} - MasterClean`)
     formData.append('_redirect', 'https://mastercleanservice.nl/bedankt')
-    
+
     const emailBody = `
 Nieuwe contactaanvraag via MasterClean website:
 
@@ -591,9 +589,9 @@ Verzonden op: ${new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam
 
 ${files.length > 0 ? `Bijlagen: ${files.length} bestand(en)` : 'Geen bijlagen'}
 `
-    
+
     formData.append('message_full', emailBody)
-    
+
     const response = await fetch(formspreeUrl, {
       method: 'POST',
       body: formData,
@@ -601,12 +599,12 @@ ${files.length > 0 ? `Bijlagen: ${files.length} bestand(en)` : 'Geen bijlagen'}
         'Accept': 'application/json'
       }
     })
-    
+
     if (response.ok) {
       console.log("✅ Alternative email sent successfully")
       return {
         success: true,
-        message: `Bedankt ${name}! Uw bericht is ontvangen via ons backup systeem. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)85 0805636.`
+        message: `Bedankt ${name}! Uw bericht is ontvangen via ons backup systeem. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)6 10754337.`
       }
     } else {
       throw new Error(`HTTP ${response.status}`)
@@ -615,7 +613,7 @@ ${files.length > 0 ? `Bijlagen: ${files.length} bestand(en)` : 'Geen bijlagen'}
     console.error("❌ Alternative email also failed:", error)
     return {
       success: false,
-      error: "Email service tijdelijk niet beschikbaar. Bel ons direct op +31 (0)85 0805636 of stuur een email naar info@mastercleanservice.nl"
+      error: "Email service tijdelijk niet beschikbaar. Bel ons direct op +31 (0)6 10754337 of stuur een email naar info@mastercleanservice.nl"
     }
   }
 }

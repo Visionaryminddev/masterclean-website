@@ -88,7 +88,7 @@ const Services = memo(function Services({ translations, lang = "nl" }: ServicesP
                     </Link>
                   </Button>
                   <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl py-3 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" asChild>
-                    <a href="tel:+31850805636" className="flex items-center justify-center">
+                    <a href="tel:+31610754337" className="flex items-center justify-center">
                       <Phone className="w-4 h-4 mr-2" />
                       {translations.nav.callNow}
                     </a>

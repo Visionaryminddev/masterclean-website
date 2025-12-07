@@ -28,9 +28,9 @@ const Hero = memo(function Hero({ translations, lang }: HeroProps) {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-              <Button 
-                size="lg" 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" 
+              <Button
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 asChild
               >
                 <Link href={`/contact?lang=${lang}`} className="flex items-center justify-center">
@@ -43,7 +43,7 @@ const Hero = memo(function Hero({ translations, lang }: HeroProps) {
                 className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 animate-pulse hover:animate-none"
                 asChild
               >
-                <a href="tel:+31850805636" className="flex items-center justify-center">
+                <a href="tel:+31610754337" className="flex items-center justify-center">
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                   {translations.nav.callNow}
                 </a>

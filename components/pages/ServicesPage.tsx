@@ -81,7 +81,7 @@ export default function ServicesPage({ searchParams }: ServicesPageProps) {
               </Link>
             </Button>
             <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" asChild>
-              <a href="tel:+31850805636">
+              <a href="tel:+31610754337">
                 <Phone className="w-5 h-5 mr-2" />
                 {t.nav.callNow}
               </a>
@@ -141,7 +141,7 @@ export default function ServicesPage({ searchParams }: ServicesPageProps) {
                       </Link>
                     </Button>
                     <Button className="bg-orange-500 hover:bg-orange-600 text-white font-bold" asChild>
-                      <a href="tel:+31850805636">
+                      <a href="tel:+31610754337">
                         <Phone className="w-4 h-4 mr-2" />
                         {t.nav.callNow}
                       </a>
@@ -180,7 +180,7 @@ export default function ServicesPage({ searchParams }: ServicesPageProps) {
               </Link>
             </Button>
             <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-bold animate-pulse" asChild>
-              <a href="tel:+31850805636">
+              <a href="tel:+31610754337">
                 <Phone className="w-5 h-5 mr-2" />
                 {t.nav.callNow}: {t.hero.phone}
               </a>

@@ -253,9 +253,9 @@ const Contact = memo(function Contact({ translations }: ContactProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">{translations.contact.info.phone.title}</h3>
-                    <p className="text-gray-600 mb-3 text-sm sm:text-base">+31 (0)85 0805636</p>
+                    <p className="text-gray-600 mb-3 text-sm sm:text-base">+31 (0)6 10754337</p>
                     <Button size="sm" className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-lg text-xs sm:text-sm px-3 py-2 transition-all duration-300 transform hover:scale-105" asChild>
-                      <a href="tel:+31850805636">{translations.footer.callButton}</a>
+                      <a href="tel:+31610754337">{translations.footer.callButton}</a>
                     </Button>
                   </div>
                 </div>
@@ -318,9 +318,8 @@ const Contact = memo(function Contact({ translations }: ContactProps) {
                 {/* Success/Error Messages */}
                 {submitResult && (
                   <div
-                    className={`mb-4 sm:mb-6 p-3 sm:p-4 rounded-xl flex items-start space-x-3 ${
-                      submitResult.success ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"
-                    }`}
+                    className={`mb-4 sm:mb-6 p-3 sm:p-4 rounded-xl flex items-start space-x-3 ${submitResult.success ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"
+                      }`}
                   >
                     {submitResult.success ? (
                       <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
@@ -400,9 +399,8 @@ const Contact = memo(function Contact({ translations }: ContactProps) {
                       {translations.contact.form.fileUpload.label}
                     </label>
                     <div
-                      className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
-                        dragActive ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"
-                      }`}
+                      className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${dragActive ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-gray-400"
+                        }`}
                       onDragEnter={handleDrag}
                       onDragLeave={handleDrag}
                       onDragOver={handleDrag}
@@ -507,8 +505,8 @@ const Contact = memo(function Contact({ translations }: ContactProps) {
                     <strong>{translations.contact.form.fileUpload.troubleText}</strong>
                     <br />
                     Bel ons direct op{" "}
-                    <a href="tel:+31850805636" className="text-blue-600 hover:underline font-medium">
-                      +31 (0)85 0805636
+                    <a href="tel:+31610754337" className="text-blue-600 hover:underline font-medium">
+                      +31 (0)6 10754337
                     </a>{" "}
                     of stuur een email naar{" "}
                     <a href="mailto:info@mastercleanservice.nl" className="text-blue-600 hover:underline font-medium">

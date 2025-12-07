@@ -37,10 +37,10 @@ const FAQCardList = memo(function FAQCardList({ items }: { items: FAQItem[] }) {
 export default function ContactPage({ searchParams }: ContactPageProps) {
   const lang = searchParams.lang || "nl"
   const t = getTranslations(lang)
-  
+
   // Get service areas from translations
   const serviceAreas = t.contact.serviceAreas || []
-  
+
   // Get FAQ items from translations
   const faqItems = t.contact.faq || []
 
@@ -60,7 +60,7 @@ export default function ContactPage({ searchParams }: ContactPageProps) {
       title: t.nav.callNow,
       description: t.contact.info.phone.title,
       action: t.nav.callNow,
-      link: "tel:+31850805636",
+      link: "tel:+31610754337",
       color: "orange",
     },
     {
@@ -76,7 +76,7 @@ export default function ContactPage({ searchParams }: ContactPageProps) {
       title: "WhatsApp",
       description: "WhatsApp",
       action: "WhatsApp",
-      link: "https://wa.me/31657211993?text=Hallo%20MasterClean%2C%20ik%20heb%20interesse%20in%20jullie%20schoonmaakdiensten.",
+      link: "https://wa.me/31610754337?text=Hallo%20MasterClean%2C%20ik%20heb%20interesse%20in%20jullie%20schoonmaakdiensten.",
       color: "green",
     },
     {
@@ -125,14 +125,14 @@ export default function ContactPage({ searchParams }: ContactPageProps) {
           <p className="text-xl text-gray-600 max-w-4xl mx-auto mb-8">{t.contact.subtitle}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-bold animate-pulse" asChild>
-              <a href="tel:+31850805636">
+              <a href="tel:+31610754337">
                 <Phone className="w-5 h-5 mr-2" />
                 {t.nav.callNow}: {t.hero.phone}
               </a>
             </Button>
             <Button size="lg" className="bg-green-500 hover:bg-green-600 text-white font-bold" asChild>
               <a
-                href="https://wa.me/31657211993?text=Hallo%20MasterClean%2C%20ik%20heb%20interesse%20in%20jullie%20schoonmaakdiensten."
+                href="https://wa.me/31610754337?text=Hallo%20MasterClean%2C%20ik%20heb%20interesse%20in%20jullie%20schoonmaakdiensten."
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -210,11 +210,10 @@ export default function ContactPage({ searchParams }: ContactPageProps) {
             <div className="p-6">
               {appointmentResult && (
                 <div
-                  className={`mb-6 p-4 rounded-lg flex items-center space-x-3 ${
-                    appointmentResult.success
-                      ? "bg-green-50 border border-green-200"
-                      : "bg-red-50 border border-red-200"
-                  }`}
+                  className={`mb-6 p-4 rounded-lg flex items-center space-x-3 ${appointmentResult.success
+                    ? "bg-green-50 border border-green-200"
+                    : "bg-red-50 border border-red-200"
+                    }`}
                 >
                   {appointmentResult.success ? (
                     <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
@@ -406,14 +405,14 @@ export default function ContactPage({ searchParams }: ContactPageProps) {
               </p>
               <div className="flex gap-4 mt-4">
                 <Button className="bg-orange-500 hover:bg-orange-600 text-white font-bold" asChild>
-                  <a href="tel:+31850805636">
+                  <a href="tel:+31610754337">
                     <Phone className="w-4 h-4 mr-2" />
                     {t.nav.callNow}
                   </a>
                 </Button>
                 <Button className="bg-green-500 hover:bg-green-600 text-white font-bold" asChild>
                   <a
-                    href="https://wa.me/31657211993?text=Hallo%20MasterClean%2C%20ik%20wil%20graag%20weten%20of%20jullie%20in%20mijn%20gebied%20werken."
+                    href="https://wa.me/31610754337?text=Hallo%20MasterClean%2C%20ik%20wil%20graag%20weten%20of%20jullie%20in%20mijn%20gebied%20werken."
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -457,14 +456,14 @@ export default function ContactPage({ searchParams }: ContactPageProps) {
             <p className="text-lg text-gray-600 mb-6">{t.contact.faqSection.moreQuestions}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white font-bold" asChild>
-                <a href="tel:+31850805636">
+                <a href="tel:+31610754337">
                   <Phone className="w-5 h-5 mr-2" />
                   {t.contact.faqSection.callButton}
                 </a>
               </Button>
               <Button size="lg" className="bg-green-500 hover:bg-green-600 text-white font-bold" asChild>
                 <a
-                  href="https://wa.me/31657211993?text=Hallo%20MasterClean%2C%20ik%20heb%20een%20vraag%20over%20jullie%20diensten."
+                  href="https://wa.me/31610754337?text=Hallo%20MasterClean%2C%20ik%20heb%20een%20vraag%20over%20jullie%20diensten."
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -143,7 +143,7 @@ class WebsiteTester {
       }
 
       // Check for phone links
-      if (html.includes("tel:+31850805636")) {
+      if (html.includes("tel:+31610754337")) {
         this.addResult("Contact Form", "PASS", "Phone link found")
       } else {
         this.addResult("Contact Form", "WARNING", "Phone link not found")

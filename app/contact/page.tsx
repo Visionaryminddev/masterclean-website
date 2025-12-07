@@ -7,7 +7,7 @@ import { PageLoadingSpinner } from "@/components/LoadingSpinner"
 export const metadata: Metadata = {
   title: "Contact - MasterClean | Neem Direct Contact Op",
   description:
-    "Neem contact op met MasterClean voor een vrijblijvende offerte. Bel 085 0805636 of vul ons contactformulier in.",
+    "Neem contact op met MasterClean voor een vrijblijvende offerte. Bel 06 10754337 of vul ons contactformulier in.",
   keywords: "contact masterclean, offerte aanvragen, telefoonnummer, email",
 }
 
@@ -18,7 +18,7 @@ interface ContactPageProps {
 export default async function Contact({ searchParams }: ContactPageProps) {
   const resolvedSearchParams = await searchParams
   const lang = resolvedSearchParams.lang || "nl"
-  
+
   return (
     <Suspense fallback={<PageLoadingSpinner />}>
       <LayoutWrapper lang={lang}>

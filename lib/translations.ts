@@ -12,7 +12,7 @@ const translations = {
       subtitle:
         "MasterClean biedt betrouwbare en hoogwaardige schoonmaakdiensten voor vakantiehuizen, kantoren en woningen. Neem vandaag nog contact op voor een vrijblijvende offerte!",
       cta: "Vraag Offerte Aan",
-      phone: "+31 (0)85 0805636",
+      phone: "+31 (0)6 10754337",
       stats: {
         clients: "Tevreden Klanten",
         rating: "Gemiddelde Beoordeling",
@@ -183,7 +183,7 @@ const translations = {
         email: "E-mailadres",
         emailPlaceholder: "uw.email@voorbeeld.nl",
         phone: "Telefoonnummer",
-        phonePlaceholder: "+31 (0)85 0805636",
+        phonePlaceholder: "+31 (0)6 10754337",
         message: "Bericht",
         messagePlaceholder: "Vertel ons over uw schoonmaakbehoeften...",
         send: "Verstuur Bericht",
@@ -335,7 +335,7 @@ const translations = {
       subtitle:
         "MasterClean bietet zuverlässige und hochwertige Reinigungsdienste für Ferienhäuser, Büros und Wohnungen. Kontaktieren Sie uns noch heute für ein unverbindliches Angebot!",
       cta: "Angebot Anfordern",
-      phone: "+31 (0)85 0805636",
+      phone: "+31 (0)6 10754337",
       stats: {
         clients: "Zufriedene Kunden",
         rating: "Durchschnittliche Bewertung",
@@ -501,7 +501,7 @@ const translations = {
         email: "E-Mail-Adresse",
         emailPlaceholder: "ihre.email@beispiel.de",
         phone: "Telefonnummer",
-        phonePlaceholder: "+31 (0)85 0805636",
+        phonePlaceholder: "+31 (0)6 10754337",
         message: "Nachricht",
         messagePlaceholder: "Erzählen Sie uns von Ihren Reinigungsanforderungen...",
         send: "Nachricht Senden",
@@ -653,7 +653,7 @@ const translations = {
       subtitle:
         "MasterClean provides reliable and high-quality cleaning services for vacation homes, offices, and residences. Contact us today for a free quote!",
       cta: "Request Quote",
-      phone: "+31 (0)85 0805636",
+      phone: "+31 (0)6 10754337",
       stats: {
         clients: "Satisfied Clients",
         rating: "Average Rating",
@@ -818,7 +818,7 @@ const translations = {
         email: "Email Address",
         emailPlaceholder: "your.email@example.com",
         phone: "Phone Number",
-        phonePlaceholder: "+31 (0)85 0805636",
+        phonePlaceholder: "+31 (0)6 10754337",
         message: "Message",
         messagePlaceholder: "Tell us about your cleaning needs...",
         send: "Send Message",
