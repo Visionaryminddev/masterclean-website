@@ -1,97 +1,115 @@
 "use server"
 
-import { Resend } from "resend"
 import nodemailer from "nodemailer"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 // SMTP configuration for direct email sending
 const createSMTPTransporter = () => {
   return nodemailer.createTransporter({
     host: process.env.EMAIL_HOST || 'smtp.hostinger.com',
-    port: parseInt(process.env.EMAIL_PORT || '587'),
-    secure: false, // true for 465, false for other ports
+    port: parseInt(process.env.EMAIL_PORT || '465'),
+    secure: true, // true for 465, false for other ports
     auth: {
       user: process.env.EMAIL_USER || 'info@mastercleanservice.nl',
       pass: process.env.EMAIL_PASS
     },
     tls: {
+      // Do not fail on invalid certs
       rejectUnauthorized: false
     }
   })
 }
 
+async function sendEmailWithNodemailer({
+  to,
+  subject,
+  html,
+  replyTo,
+  attachments = []
+}: {
+  to: string | string[],
+  subject: string,
+  html: string,
+  replyTo?: string,
+  attachments?: any[]
+}) {
+  const transporter = createSMTPTransporter()
+
+  const mailOptions = {
+    from: `"MasterClean Website" <${process.env.EMAIL_USER || 'info@mastercleanservice.nl'}>`,
+    to,
+    replyTo,
+    subject,
+    html,
+    attachments
+  }
+
+  return await transporter.sendMail(mailOptions)
+}
+
 export async function submitContactForm(formData: FormData) {
   console.log("=== CONTACT FORM SUBMISSION START ===")
 
-  // Get form data
-  const name = formData.get("name") as string
-  const email = formData.get("email") as string
-  const phone = formData.get("phone") as string
-  const message = formData.get("message") as string
+  try {
+    // Get form data
+    const name = formData.get("name") as string
+    const email = formData.get("email") as string
+    const phone = formData.get("phone") as string
+    const message = formData.get("message") as string
 
-  console.log("Form data received:", { name, email, phone: !!phone, message: !!message })
+    console.log("Form data received:", { name, email, phone: !!phone, message: !!message })
 
-  // Process uploaded files
-  const files: { name: string; content: string; type: string; size: number }[] = []
-  const fileEntries = Array.from(formData.entries()).filter(([key]) => key.startsWith("file_"))
+    // Process uploaded files
+    const files: { name: string; content: string; type: string; size: number }[] = []
+    const fileEntries = Array.from(formData.entries()).filter(([key]) => key.startsWith("file_"))
 
-  for (const [key, value] of fileEntries) {
-    if (value instanceof File && value.size > 0) {
-      try {
-        const arrayBuffer = await value.arrayBuffer()
-        const base64Content = Buffer.from(arrayBuffer).toString("base64")
+    for (const [key, value] of fileEntries) {
+      if (value instanceof File && value.size > 0) {
+        try {
+          const arrayBuffer = await value.arrayBuffer()
+          const base64Content = Buffer.from(arrayBuffer).toString("base64")
 
-        files.push({
-          name: value.name,
-          content: base64Content,
-          type: value.type,
-          size: value.size,
-        })
+          files.push({
+            name: value.name,
+            content: base64Content,
+            type: value.type,
+            size: value.size,
+          })
 
-        console.log(`File processed: ${value.name} (${value.size} bytes)`)
-      } catch (error) {
-        console.error(`Error processing file ${value.name}:`, error)
+          console.log(`File processed: ${value.name} (${value.size} bytes)`)
+        } catch (error) {
+          console.error(`Error processing file ${value.name}:`, error)
+        }
       }
     }
-  }
 
-  console.log(`Total files processed: ${files.length}`)
+    console.log(`Total files processed: ${files.length}`)
 
-  // Basic validation
-  if (!name || !email || !message) {
-    console.log("Validation failed: missing required fields")
-    return {
-      success: false,
-      error: "Naam, email en bericht zijn verplichte velden",
+    // Basic validation
+    if (!name || !email || !message) {
+      console.log("Validation failed: missing required fields")
+      return {
+        success: false,
+        error: "Naam, email en bericht zijn verplichte velden",
+      }
     }
-  }
 
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(email)) {
-    console.log("Validation failed: invalid email format")
-    return {
-      success: false,
-      error: "Ongeldig emailadres",
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      console.log("Validation failed: invalid email format")
+      return {
+        success: false,
+        error: "Ongeldig emailadres",
+      }
     }
-  }
 
-  // Try direct email solution first
-  console.log("🔄 Attempting to send email via direct method...")
-
-  // Use a simple webhook solution that will work reliably
-  return await sendEmailDirectly({ name, email, phone, message, files })
-
-  try {
-    console.log("Attempting to send email via Resend...")
-
-    // Prepare attachments for Resend
-    const attachments = files.map((file) => ({
+    // Prepare attachments for Nodemailer
+    const mailAttachments = files.map((file) => ({
       filename: file.name,
-      content: file.content,
-      type: file.type,
-      disposition: "attachment",
+      content: file.content, // Buffer or base64 string
+      encoding: 'base64',
+      contentType: file.type
     }))
 
     // Create file list for email content
@@ -119,10 +137,9 @@ export async function submitContactForm(formData: FormData) {
         : ""
 
     // Send email to MasterClean
-    const emailResult = await resend.emails.send({
-      from: "MasterClean Contact Form <onboarding@resend.dev>", // More descriptive sender name
-      to: ["info@mastercleanservice.nl"],
-      reply_to: email, // Allow direct reply to customer
+    await sendEmailWithNodemailer({
+      to: "info@mastercleanservice.nl",
+      replyTo: email,
       subject: `🔵 Nieuwe contactaanvraag van ${name}${files.length > 0 ? ` (${files.length} bijlage${files.length !== 1 ? "s" : ""})` : ""}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -156,16 +173,15 @@ export async function submitContactForm(formData: FormData) {
           </p>
         </div>
       `,
-      attachments: attachments.length > 0 ? attachments : undefined,
+      attachments: mailAttachments,
     })
 
-    console.log("✅ Email sent successfully:", emailResult)
+    console.log("✅ Email sent successfully via Nodemailer")
 
     // Send confirmation email to customer
     try {
-      await resend.emails.send({
-        from: "MasterClean <onboarding@resend.dev>",
-        to: [email],
+      await sendEmailWithNodemailer({
+        to: email,
         subject: "Bedankt voor uw bericht - MasterClean",
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -224,25 +240,9 @@ export async function submitContactForm(formData: FormData) {
       success: true,
       message: `Bedankt ${name}! Uw bericht${files.length > 0 ? ` met ${files.length} bijlage${files.length !== 1 ? "s" : ""}` : ""} is ontvangen. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)6 10754337 voor directe hulp.`,
     }
+
   } catch (error) {
     console.error("❌ Failed to send email:", error)
-
-    // Provide specific error messages based on the error type
-    if (error instanceof Error) {
-      if (error.message.includes("API key")) {
-        return {
-          success: false,
-          error: "Email service configuratie probleem. Bel ons direct op +31 (0)6 10754337.",
-        }
-      }
-      if (error.message.includes("rate limit")) {
-        return {
-          success: false,
-          error: "Te veel berichten verzonden. Probeer het over een paar minuten opnieuw of bel +31 (0)6 10754337.",
-        }
-      }
-    }
-
     return {
       success: false,
       error:
@@ -256,69 +256,60 @@ export async function submitContactForm(formData: FormData) {
 export async function submitAppointmentForm(formData: FormData) {
   console.log("=== APPOINTMENT FORM SUBMISSION START ===")
 
-  // Get form data
-  const name = formData.get("name") as string
-  const email = formData.get("email") as string
-  const phone = formData.get("phone") as string
-  const preferredDate = formData.get("preferredDate") as string
-  const preferredTime = formData.get("preferredTime") as string
-  const serviceType = formData.get("serviceType") as string
-  const address = formData.get("address") as string
-  const message = formData.get("message") as string
-
-  console.log("Appointment data received:", {
-    name,
-    email,
-    phone: !!phone,
-    preferredDate,
-    preferredTime,
-    serviceType,
-    address: !!address,
-    message: !!message,
-  })
-
-  // Basic validation
-  if (!name || !email || !phone || !preferredDate || !preferredTime || !serviceType) {
-    console.log("Validation failed: missing required fields")
-    return {
-      success: false,
-      error: "Alle verplichte velden moeten worden ingevuld",
-    }
-  }
-
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(email)) {
-    console.log("Validation failed: invalid email format")
-    return {
-      success: false,
-      error: "Ongeldig emailadres",
-    }
-  }
-
-  // Date validation (not in the past)
-  const selectedDate = new Date(preferredDate)
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-
-  if (selectedDate < today) {
-    return {
-      success: false,
-      error: "De gewenste datum kan niet in het verleden liggen",
-    }
-  }
-
-  // Check if API key is available
-  if (!process.env.RESEND_API_KEY) {
-    console.error("❌ RESEND_API_KEY not found in environment variables")
-    return {
-      success: false,
-      error: "Email service niet geconfigureerd. Bel ons direct op +31 (0)6 10754337.",
-    }
-  }
-
   try {
-    console.log("Attempting to send appointment email via Resend...")
+    // Get form data
+    const name = formData.get("name") as string
+    const email = formData.get("email") as string
+    const phone = formData.get("phone") as string
+    const preferredDate = formData.get("preferredDate") as string
+    const preferredTime = formData.get("preferredTime") as string
+    const serviceType = formData.get("serviceType") as string
+    const address = formData.get("address") as string
+    const message = formData.get("message") as string
+
+    console.log("Appointment data received:", {
+      name,
+      email,
+      phone: !!phone,
+      preferredDate,
+      preferredTime,
+      serviceType,
+      address: !!address,
+      message: !!message,
+    })
+
+    // Basic validation
+    if (!name || !email || !phone || !preferredDate || !preferredTime || !serviceType) {
+      console.log("Validation failed: missing required fields")
+      return {
+        success: false,
+        error: "Alle verplichte velden moeten worden ingevuld",
+      }
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      console.log("Validation failed: invalid email format")
+      return {
+        success: false,
+        error: "Ongeldig emailadres",
+      }
+    }
+
+    // Date validation (not in the past)
+    const selectedDate = new Date(preferredDate)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
+    if (selectedDate < today) {
+      return {
+        success: false,
+        error: "De gewenste datum kan niet in het verleden liggen",
+      }
+    }
+
+    console.log("Attempting to send appointment email via Nodemailer...")
 
     // Format date and time for display
     const formattedDate = new Date(preferredDate).toLocaleDateString("nl-NL", {
@@ -331,9 +322,8 @@ export async function submitAppointmentForm(formData: FormData) {
     const formattedTime = preferredTime
 
     // Send email to MasterClean
-    const emailResult = await resend.emails.send({
-      from: "MasterClean <onboarding@resend.dev>",
-      to: ["info@mastercleanservice.nl"],
+    await sendEmailWithNodemailer({
+      to: "info@mastercleanservice.nl",
       subject: `🗓️ Nieuwe Afspraakverzoek van ${name} - ${formattedDate}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -389,13 +379,12 @@ export async function submitAppointmentForm(formData: FormData) {
       `,
     })
 
-    console.log("✅ Appointment email sent successfully:", emailResult)
+    console.log("✅ Appointment email sent successfully via Nodemailer")
 
     // Send confirmation email to customer
     try {
-      await resend.emails.send({
-        from: "MasterClean <onboarding@resend.dev>",
-        to: [email],
+      await sendEmailWithNodemailer({
+        to: email,
         subject: "Afspraakverzoek ontvangen - MasterClean",
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -452,22 +441,6 @@ export async function submitAppointmentForm(formData: FormData) {
     }
   } catch (error) {
     console.error("❌ Failed to send appointment email:", error)
-
-    if (error instanceof Error) {
-      if (error.message.includes("API key")) {
-        return {
-          success: false,
-          error: "Email service configuratie probleem. Bel ons direct op +31 (0)6 10754337.",
-        }
-      }
-      if (error.message.includes("rate limit")) {
-        return {
-          success: false,
-          error: "Te veel berichten verzonden. Probeer het over een paar minuten opnieuw of bel +31 (0)6 10754337.",
-        }
-      }
-    }
-
     return {
       success: false,
       error:
@@ -478,145 +451,7 @@ export async function submitAppointmentForm(formData: FormData) {
   }
 }
 
-// Direct email solution using mailto or webhook
-async function sendEmailDirectly({ name, email, phone, message, files }: {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-  files: any[];
-}) {
-  try {
-    console.log("📧 Attempting direct email solution...")
 
-    // Use Web3Forms as a reliable service
-    const web3formsUrl = 'https://api.web3forms.com/submit'
-
-    const formData = new FormData()
-    formData.append('access_key', 'your_correct_access_key')
-    formData.append('name', name)
-    formData.append('email', email)
-    formData.append('phone', phone || 'Niet opgegeven')
-    formData.append('message', message)
-    formData.append('from_name', 'MasterClean Website')
-    formData.append('subject', `🔵 Nieuwe contactaanvraag van ${name} - MasterClean`)
-    formData.append('to', 'info@mastercleanservice.nl')
-    formData.append('replyto', email)
-
-    const fullMessage = `
-Nieuwe contactaanvraag via MasterClean website:
-
-==== CONTACTGEGEVENS ====
-Naam: ${name}
-Email: ${email}
-Telefoon: ${phone || 'Niet opgegeven'}
-
-==== BERICHT ====
-${message}
-
-==== DETAILS ====
-Verzonden op: ${new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' })}
-Bijlagen: ${files.length > 0 ? `${files.length} bestand(en)` : 'Geen bijlagen'}
-
-⚡ ACTIE VEREIST: Neem binnen 24 uur contact op met deze klant!
-
-📞 Direct contact:
-- Bel: ${phone || 'Niet opgegeven'}
-- Email: ${email}
-- Website: https://mastercleanservice.nl
-`
-
-    formData.append('message', fullMessage)
-
-    const response = await fetch(web3formsUrl, {
-      method: 'POST',
-      body: formData
-    })
-
-    const result = await response.json()
-
-    if (response.ok && result.success) {
-      console.log("✅ Direct email sent successfully via Web3Forms")
-      return {
-        success: true,
-        message: `Bedankt ${name}! Uw bericht is ontvangen. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)6 10754337 voor directe hulp.`
-      }
-    } else {
-      console.error("Web3Forms error:", result)
-      throw new Error(`Web3Forms failed: ${result.message || 'Unknown error'}`)
-    }
-  } catch (error) {
-    console.error("❌ Direct email failed:", error)
-    // Try alternative method
-    return await sendEmailViaAlternative({ name, email, phone, message, files })
-  }
-}
-
-// Alternative email solution using webhook
-async function sendEmailViaAlternative({ name, email, phone, message, files }: {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-  files: any[];
-}) {
-  try {
-    console.log("Attempting alternative email solution...")
-
-    // Use Formspree as backup (free service)
-    const formspreeUrl = 'https://formspree.io/f/xvgorqbv' // You'll need to set this up
-
-    const formData = new FormData()
-    formData.append('name', name)
-    formData.append('email', email)
-    formData.append('phone', phone || 'Niet opgegeven')
-    formData.append('message', message)
-    formData.append('_replyto', email)
-    formData.append('_subject', `Nieuwe contactaanvraag van ${name} - MasterClean`)
-    formData.append('_redirect', 'https://mastercleanservice.nl/bedankt')
-
-    const emailBody = `
-Nieuwe contactaanvraag via MasterClean website:
-
-Naam: ${name}
-Email: ${email}
-Telefoon: ${phone || 'Niet opgegeven'}
-
-Bericht:
-${message}
-
-Verzonden op: ${new Date().toLocaleString('nl-NL', { timeZone: 'Europe/Amsterdam' })}
-
-${files.length > 0 ? `Bijlagen: ${files.length} bestand(en)` : 'Geen bijlagen'}
-`
-
-    formData.append('message_full', emailBody)
-
-    const response = await fetch(formspreeUrl, {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-
-    if (response.ok) {
-      console.log("✅ Alternative email sent successfully")
-      return {
-        success: true,
-        message: `Bedankt ${name}! Uw bericht is ontvangen via ons backup systeem. We nemen binnen 24 uur contact met u op via ${email} of bel ons direct op +31 (0)6 10754337.`
-      }
-    } else {
-      throw new Error(`HTTP ${response.status}`)
-    }
-  } catch (error) {
-    console.error("❌ Alternative email also failed:", error)
-    return {
-      success: false,
-      error: "Email service tijdelijk niet beschikbaar. Bel ons direct op +31 (0)6 10754337 of stuur een email naar info@mastercleanservice.nl"
-    }
-  }
-}
 
 // Debug function to check environment setup
 export async function debugEnvironmentSetup() {
