@@ -5,7 +5,7 @@ import nodemailer from "nodemailer"
 
 // SMTP configuration for direct email sending
 const createSMTPTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     host: process.env.EMAIL_HOST || 'smtp.hostinger.com',
     port: parseInt(process.env.EMAIL_PORT || '465'),
     secure: true, // true for 465, false for other ports
@@ -245,8 +245,8 @@ export async function submitContactForm(formData: FormData) {
     console.error("❌ Failed to send email:", error)
     return {
       success: false,
-      error:
-        "Er is een probleem opgetreden bij het verzenden van uw bericht. Bel ons direct op +31 (0)6 10754337 of stuur een email naar info@mastercleanservice.nl.",
+      error: "Er is een probleem opgetreden bij het verzenden van uw bericht. Bel ons direct op +31 (0)6 10754337 of stuur een email naar info@mastercleanservice.nl.",
+      details: error instanceof Error ? error.message : String(error)
     }
   } finally {
     console.log("=== CONTACT FORM SUBMISSION END ===")

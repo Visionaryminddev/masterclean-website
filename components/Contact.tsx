@@ -37,6 +37,7 @@ const Contact = memo(function Contact({ translations }: ContactProps) {
     success: boolean
     message?: string
     error?: string
+    details?: string
   } | null>(null)
   const [debugInfo, setDebugInfo] = useState<any>(null)
   const [showDebug, setShowDebug] = useState(false)
@@ -315,7 +316,6 @@ const Contact = memo(function Contact({ translations }: ContactProps) {
                 <p className="text-gray-600 text-sm sm:text-base">Voeg foto's of documenten toe om uw vraag te verduidelijken</p>
               </CardHeader>
               <CardContent className="p-4 sm:p-6">
-                {/* Success/Error Messages */}
                 {submitResult && (
                   <div
                     className={`mb-4 sm:mb-6 p-3 sm:p-4 rounded-xl flex items-start space-x-3 ${submitResult.success ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"
@@ -326,9 +326,14 @@ const Contact = memo(function Contact({ translations }: ContactProps) {
                     ) : (
                       <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
                     )}
-                    <p className={`${submitResult.success ? "text-green-800" : "text-red-800"}`}>
-                      {submitResult.success ? submitResult.message : submitResult.error}
-                    </p>
+                    <div className={`${submitResult.success ? "text-green-800" : "text-red-800"}`}>
+                      <p>{submitResult.success ? submitResult.message : submitResult.error}</p>
+                      {!submitResult.success && submitResult.details && (
+                        <p className="text-xs mt-2 opacity-80 font-mono bg-white/50 p-2 rounded">
+                          Technical details: {submitResult.details}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 )}
 
