@@ -44,3 +44,4 @@ test-email.js
 *.tmp
 *.temp
 .DS_Store
+.env*.local
